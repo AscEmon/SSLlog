@@ -5,14 +5,14 @@ from datetime import datetime
 import os
 
 
-with open('config.json', 'r') as config_file:
-    config = json.load(config_file)
-    
-# 🔹 Jira Credentials & Base URL
-JIRA_URL = config['JIRA_URL']
-JIRA_API_TOKEN = config['JIRA_API_TOKEN']
-JIRA_USER_EMAIL = config['JIRA_USER_EMAIL']
-auth = (JIRA_USER_EMAIL, JIRA_API_TOKEN)
+#with open('config.json', 'r') as config_file:
+#    config = json.load(config_file)
+#    
+## 🔹 Jira Credentials & Base URL
+#JIRA_URL = config['JIRA_URL']
+#JIRA_API_TOKEN = config['JIRA_API_TOKEN']
+#JIRA_USER_EMAIL = config['JIRA_USER_EMAIL']
+#auth = (JIRA_USER_EMAIL, JIRA_API_TOKEN)
 
 # 🔹 Config file path (where we store field mappings)
 CONFIG_FILE = "config.json"
@@ -108,8 +108,9 @@ def update_config_with_dropdown_values(project_key, issue_type, error_json):
 
 
 
-def create_jira_task(project_key, issue_type):
+def create_jira_key(project_key, issue_type,JIRA_URL,JIRA_API_TOKEN,JIRA_USER_EMAIL):
     """Create a Jira task and handle missing custom fields"""
+    auth = (JIRA_USER_EMAIL, JIRA_API_TOKEN)
     data = {
         "fields": {
             "project": {"key": project_key},
@@ -140,9 +141,9 @@ def create_jira_task(project_key, issue_type):
             print("❌ Failed to parse error response as JSON.")
 
 
-def create_jira_task_or_issue(PROJECT_KEY,issue_type):
+def create_jira_task_or_issue_key(PROJECT_KEY,issue_type,JIRA_URL,JIRA_API_TOKEN,JIRA_USER_EMAIL):
     """Create a Jira task or issue dynamically with custom fields loaded from config.json."""
-
+    auth = (JIRA_USER_EMAIL, JIRA_API_TOKEN)
     # 🔹 Load the custom field mappings from config.json
     config = load_config()
 
@@ -217,42 +218,42 @@ def create_jira_task_or_issue(PROJECT_KEY,issue_type):
         print(f"✅ Successfully created {issue_type} json")
    
 
-def main():
-    # Prompt the user to enter the Jira Project Key
-    project_key = input("Enter Jira Project Key for setup: ").strip()
-    
-    # Initialize an empty list to store the selected issue types
-    issue_types = []
-    
-    # Loop until the user provides a valid input for issue type selection
-    while True:
-        # Prompt the user to select an issue type using numbers
-        issue_type_input = input("Enter issue type to configure (1 for Task, 2 for Bug, 3 for Both): ").strip()
-        
-        # Map the numeric input to the corresponding issue type
-        if issue_type_input == "1":
-            issue_types = ["Task"]
-            break
-        elif issue_type_input == "2":
-            issue_types = ["Bug"]
-            break
-        elif issue_type_input == "3":
-            issue_types = ["Task", "Bug"]
-            break
-        else:
-            print("Invalid input. Please enter '1' for Task, '2' for Bug, or '3' for Both.")
-    
-    # Iterate over the selected issue types and process each one
-    for issue_type in issue_types:
-        print(f"\n🚀 Attempting to create a {issue_type} in Jira...")
-        
-        # Attempt to create a Jira task/bug
-        create_jira_task(project_key, issue_type)
-        
-        # Ask the user if they want to set dropdown values for the current issue type
-        set_dropdown = input(f"Enter set dropdown for {issue_type} setup: (Y/N) ").strip().upper()
-        if set_dropdown == "Y":
-            create_jira_task_or_issue(project_key, issue_type)
-
-if __name__ == "__main__":
-    main()
+#def main():
+#    # Prompt the user to enter the Jira Project Key
+#    project_key = input("Enter Jira Project Key for setup: ").strip()
+#    
+#    # Initialize an empty list to store the selected issue types
+#    issue_types = []
+#    
+#    # Loop until the user provides a valid input for issue type selection
+#    while True:
+#        # Prompt the user to select an issue type using numbers
+#        issue_type_input = input("Enter issue type to configure (1 for Task, 2 for Bug, 3 for Both): ").strip()
+#        
+#        # Map the numeric input to the corresponding issue type
+#        if issue_type_input == "1":
+#            issue_types = ["Task"]
+#            break
+#        elif issue_type_input == "2":
+#            issue_types = ["Bug"]
+#            break
+#        elif issue_type_input == "3":
+#            issue_types = ["Task", "Bug"]
+#            break
+#        else:
+#            print("Invalid input. Please enter '1' for Task, '2' for Bug, or '3' for Both.")
+#    
+#    # Iterate over the selected issue types and process each one
+#    for issue_type in issue_types:
+#        print(f"\n🚀 Attempting to create a {issue_type} in Jira...")
+#        
+#        # Attempt to create a Jira task/bug
+#        create_jira_key(project_key, issue_type)
+#        
+#        # Ask the user if they want to set dropdown values for the current issue type
+#        set_dropdown = input(f"Enter set dropdown for {issue_type} setup: (Y/N) ").strip().upper()
+#        if set_dropdown == "Y":
+#            create_jira_task_or_issue_key(project_key, issue_type)
+#
+#if __name__ == "__main__":
+#    main()

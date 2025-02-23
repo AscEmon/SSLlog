@@ -45,44 +45,5 @@
             "Start Date": "customfield_10046",
             "End Date": "customfield_10047"
         }
-    },
-    "LEARNJIRA": {
-        "Task": {
-            "Task Size": {
-                "field_key": "customfield_10048",
-                "Small(S)": "10036",
-                "Medium(M)": "10037",
-                "Large(L)": "10038",
-                "Extra Large(XL)": "10039"
-            },
-            "Orginal Estimate": "customfield_10051",
-            "Task Category": {
-                "field_key": "customfield_10041",
-                "Development & Unit testing": "10032",
-                "API integration": "10033",
-                "QA observation": "10034",
-                "UX improvement": "10035"
-            },
-            "Start Date": "customfield_10043",
-            "End Date": "customfield_10047"
-        },
-        "Bug": {
-            "Task Size": {
-                "field_key": "customfield_10048",
-                "Small(S)": "10036",
-                "Medium(M)": "10037",
-                "Large(L)": "10038",
-                "Extra Large(XL)": "10039"
-            },
-            "Task Category": {
-                "field_key": "customfield_10041",
-                "Development & Unit testing": "10032",
-                "API integration": "10033",
-                "QA observation": "10034",
-                "UX improvement": "10035"
-            },
-            "Start Date": "customfield_10043",
-            "End Date": "customfield_10047"
-        }
     }
 }
