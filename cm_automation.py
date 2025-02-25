@@ -15,7 +15,8 @@ REQUIRED_KEYS = [
     "DISPLAY_NAME",
     "JIRA_URL",
     "JIRA_API_TOKEN",
-    "JIRA_USER_EMAIL"
+    "JIRA_USER_EMAIL",
+    "GEMINI_API_KEY"
 ]
 
 def select_projects(today_commits):

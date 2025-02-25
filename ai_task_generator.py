@@ -1,5 +1,22 @@
 import subprocess
 import requests
+import os
+import json
+CONFIG_FILE = "config.json"
+# 🔹 Required Custom Fields
+REQUIRED_FIELDS = ["Task Size", "Orginal Estimate", "Task Category", "Start Date", "End Date"]
+
+
+def load_config():
+    """Load existing config.json"""
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            # If the file is empty or invalid, return an empty dict
+            return {}
+    return {}
 
 def generate_tasks_with_ai(commit_messages, model_choice,num_tasks):
     """Generate exactly {num_tasks} distinct tasks from commit messages using AI."""
@@ -18,9 +35,11 @@ def generate_tasks_with_ai(commit_messages, model_choice,num_tasks):
 
 def generate_with_gemini(prompt):
     """Generate tasks using Gemini AI."""
+#        AIzaSyDDLZCTwNvDMt4MdWNWfMz0v5LnK2KVQus
+    config = load_config()
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
     headers = {"Content-Type": "application/json"}
-    params = {"key": "AIzaSyDDLZCTwNvDMt4MdWNWfMz0v5LnK2KVQus"}
+    params = {"key": config["GEMINI_API_KEY"]}
     data = {"contents": [{"parts": [{"text": prompt}]}]}
 
     response = requests.post(url, headers=headers, params=params, json=data)

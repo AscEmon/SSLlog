@@ -2,10 +2,11 @@
     "BITBUCKET_USER": "AscEmon",
     "BITBUCKET_APP_PASSWORD": "ATBBnma7BPxQeG7njJLNnHehbwHzB815F97A",
     "BITBUCKET_WORKSPACE": "sslengineering",
-    "DISPLAY_NAME": "Rafid Hussain Khan",
+    "DISPLAY_NAME": "Abu sayed",
     "JIRA_URL": "https://sslwireless1699.atlassian.net",
     "JIRA_API_TOKEN": "ATATT3xFfGF098RBSfQUmFF0_dYNfQbzk5z-IF_LAywgcwxosXFjuHnqoNwOpB0C357zEnrH10jRmNb48j0WdDSC9vPI6aoNumeIhtEB7sEDWHn6vLz7XQEMEldDuU8LsqJROrdBc_Yl59XYcGCzOJJl33OAkoCdTWjEIjrmAGgxRVKhr_ka08w=D1E92BC2",
     "JIRA_USER_EMAIL": "abu.sayed@sslwireless.com",
+    "GEMINI_API_KEY": "AIzaSyDDLZCTwNvDMt4MdWNWfMz0v5LnK2KVQus",
     "projects": [
         "DP"
     ],
