@@ -6,6 +6,9 @@
     "JIRA_URL": "https://sslwireless1699.atlassian.net",
     "JIRA_API_TOKEN": "ATATT3xFfGF098RBSfQUmFF0_dYNfQbzk5z-IF_LAywgcwxosXFjuHnqoNwOpB0C357zEnrH10jRmNb48j0WdDSC9vPI6aoNumeIhtEB7sEDWHn6vLz7XQEMEldDuU8LsqJROrdBc_Yl59XYcGCzOJJl33OAkoCdTWjEIjrmAGgxRVKhr_ka08w=D1E92BC2",
     "JIRA_USER_EMAIL": "abu.sayed@sslwireless.com",
+    "projects": [
+        "DP"
+    ],
     "DP": {
         "Task": {
             "Task Size": {
