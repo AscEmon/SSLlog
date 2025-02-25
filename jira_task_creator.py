@@ -239,13 +239,48 @@ def create_jira_task_or_issue(PROJECT_KEY, issue_type, task, description, select
     else:
         print(f"❌ Failed to create {issue_type}: {response.text}")
 
-def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate):
-    """Log task creation details in Jira."""
+#def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate):
+#    """Log task creation details in Jira."""
+#    jira_auth = get_jira_auth()
+#    JIRA_URL = jira_auth["url"]
+#    auth = jira_auth["auth"]
+#    
+#    
+#    work_log_payload = {
+#        "timeSpent": time_estimate,  # e.g., "2h" or "30m"
+#        "started": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.000+0000"),  # UTC timestamp
+#        "comment": {
+#            "type": "doc",
+#            "version": 1,
+#            "content": [
+#                {
+#                    "type": "paragraph",
+#                    "content": [
+#                        {
+#                            "type": "text",
+#                            "text": summary
+#                        }
+#                    ]
+#                }
+#            ]
+#        }
+#    }
+#    
+#    # Call the Work Log API
+#    work_log_url = f"{JIRA_URL}/rest/api/3/issue/{issue_key}/worklog"
+#    work_log_response = requests.post(work_log_url, json=work_log_payload, auth=auth, headers={"Content-Type": "application/json"})
+#    
+#    if work_log_response.status_code == 201:
+#        print(f"✅ Logged task creation details in Jira issue: {issue_key} for {PROJECT_KEY}")
+#    else:
+#        print(f"❌ Failed to log task creation details in Jira: {work_log_response.text}")
+def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate, new_status="Done"):
+    """Log task creation details in Jira and optionally update the issue status."""
     jira_auth = get_jira_auth()
     JIRA_URL = jira_auth["url"]
     auth = jira_auth["auth"]
     
-    
+    # Step 1: Log work in Jira
     work_log_payload = {
         "timeSpent": time_estimate,  # e.g., "2h" or "30m"
         "started": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.000+0000"),  # UTC timestamp
@@ -274,6 +309,45 @@ def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate)
         print(f"✅ Logged task creation details in Jira issue: {issue_key} for {PROJECT_KEY}")
     else:
         print(f"❌ Failed to log task creation details in Jira: {work_log_response.text}")
+        return  # Stop further execution if work logging fails
+    
+    # Step 2: Update the issue status (if a new status is provided)
+    if new_status:
+        # Get the list of available transitions for the issue
+        transitions_url = f"{JIRA_URL}/rest/api/3/issue/{issue_key}/transitions"
+        transitions_response = requests.get(transitions_url, auth=auth, headers={"Content-Type": "application/json"})
+        
+        if transitions_response.status_code != 200:
+            print(f"❌ Failed to fetch transitions for issue {issue_key}: {transitions_response.text}")
+            return
+        
+        # Parse the available transitions
+        transitions = transitions_response.json().get("transitions", [])
+        transition_id = None
+        
+        # Find the transition ID corresponding to the desired status
+        for transition in transitions:
+            if transition["name"].lower() == new_status.lower():
+                transition_id = transition["id"]
+                break
+        
+        if not transition_id:
+            print(f"❌ No transition found for status '{new_status}' in issue {issue_key}.")
+            return
+        
+        # Perform the transition
+        transition_payload = {
+            "transition": {
+                "id": transition_id
+            }
+        }
+        transition_url = f"{JIRA_URL}/rest/api/3/issue/{issue_key}/transitions"
+        transition_response = requests.post(transition_url, json=transition_payload, auth=auth, headers={"Content-Type": "application/json"})
+        
+        if transition_response.status_code == 204:
+            print(f"✅ Updated issue {issue_key} status to '{new_status}'.")
+        else:
+            print(f"❌ Failed to update issue {issue_key} status to '{new_status}': {transition_response.text}")
 
 def select_jira_project_for_repo(selected_repos):
     """Map selected Bitbucket repositories to Jira projects."""
