@@ -2,7 +2,7 @@ import subprocess
 import requests
 import os
 import json
-CONFIG_FILE = "config.json"
+CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
 # 🔹 Required Custom Fields
 REQUIRED_FIELDS = ["Task Size", "Orginal Estimate", "Task Category", "Start Date", "End Date"]
 
@@ -35,9 +35,8 @@ def generate_tasks_with_ai(commit_messages, model_choice,num_tasks):
 
 def generate_with_gemini(prompt):
     """Generate tasks using Gemini AI."""
-#        AIzaSyDDLZCTwNvDMt4MdWNWfMz0v5LnK2KVQus
     config = load_config()
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
     headers = {"Content-Type": "application/json"}
     params = {"key": config["GEMINI_API_KEY"]}
     data = {"contents": [{"parts": [{"text": prompt}]}]}

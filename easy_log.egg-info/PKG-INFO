@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: easy-log
+Version: 1.0.0
+Summary: A CLI tool to automate logging tasks from Bitbucket to Jira.
+Home-page: https://github.com/AscEmon/easy_log
+Author: Abu Sayed Chowdhury
+Author-email: sayem227@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# Easy Log CLI Tool
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/easy_log.git
+   cd easy_log
+
+

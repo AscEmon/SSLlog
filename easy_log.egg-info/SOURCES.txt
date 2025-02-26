@@ -1,0 +1,15 @@
+README.md
+setup.py
+easy_log/__init__.py
+easy_log/ai_task_generator.py
+easy_log/bitbucket.py
+easy_log/cli.py
+easy_log/config_gen.py
+easy_log/custom_key_gen.py
+easy_log/jira_task_creator.py
+easy_log.egg-info/PKG-INFO
+easy_log.egg-info/SOURCES.txt
+easy_log.egg-info/dependency_links.txt
+easy_log.egg-info/entry_points.txt
+easy_log.egg-info/requires.txt
+easy_log.egg-info/top_level.txt

@@ -1,0 +1,3 @@
+[console_scripts]
+easy_log = easy_log.cli:cli
+

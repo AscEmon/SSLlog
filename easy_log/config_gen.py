@@ -13,24 +13,31 @@ REQUIRED_KEYS = [
     "JIRA_USER_EMAIL"
 ]
 
-# Path to the configuration file
-CONFIG_FILE = Path("config.json")
+# Define the config file path
+CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
 
 def load_config():
-    """Load the configuration file."""
-    if not CONFIG_FILE.exists():
-        return {}
+    """Load the configuration from the file."""
+    if not os.path.exists(CONFIG_FILE):
+        return {}  # Return an empty dictionary if the file doesn't exist
+
     with open(CONFIG_FILE, "r") as file:
         try:
             return json.load(file)
         except json.JSONDecodeError:
+            print("Error: The configuration file is not valid JSON.")
             return {}
 
 def save_config(config):
     """Save the configuration to the file."""
+    config_dir = os.path.dirname(CONFIG_FILE)
+    if not os.path.exists(config_dir):
+        os.makedirs(config_dir)  # Create the directory if it doesn't exist
+
     with open(CONFIG_FILE, "w") as file:
         json.dump(config, file, indent=4)
-
+        
+        
 def validate_config(config):
     """Validate if all required keys are present and non-empty."""
     missing_keys = [key for key in REQUIRED_KEYS if not config.get(key)]
@@ -49,22 +56,3 @@ def setup_config():
     save_config(config)
     print("Configuration saved successfully.")
 
-#def main():
-#    # Load the existing configuration
-#    config = load_config()
-#
-#    # Validate the configuration
-#    missing_keys = validate_config(config)
-#    if missing_keys:
-#        print("The following configuration values are missing or empty:")
-#        for key in missing_keys:
-#            print(f"- {key}")
-#        setup_config()
-#        config = load_config()  # Reload the updated configuration
-#
-#    # Proceed to the next step
-#    print("Configuration is complete. Proceeding to the next step...")
-#    # Your logic for the next step goes here
-#
-#if __name__ == "__main__":
-#    main()

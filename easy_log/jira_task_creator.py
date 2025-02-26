@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 
 # Path to the configuration file
-CONFIG_FILE = "config.json"
+CONFIG_FILE =  os.path.expanduser("~/.easy_log/config.json")
 
 def load_config():
     """Load existing config.json."""
@@ -31,70 +31,6 @@ def get_jira_auth():
             "Authorization": f"Basic {requests.auth._basic_auth_str(JIRA_USER_EMAIL, JIRA_API_TOKEN)}"
         }
     }
-
-#def get_user_selected_task_category(project_key, issue_type):
-#    """Get the user-selected Task Category ID based on the configuration."""
-#    config = load_config()
-#    # Get the Task Category section for the specified project key and issue type
-#    task_category_config = config.get(project_key, {}).get(issue_type, {}).get("Task Category", {})
-#    if not task_category_config:
-#        print(f"❌ No Task Category configuration found for project '{project_key}' and issue type '{issue_type}'.")
-#        return None
-#    
-#    # Dynamically build the task_categories dictionary
-#    task_categories = {}
-#    for idx, (category_name, category_id) in enumerate(task_category_config.items(), start=1):
-#        if category_name != "field_key":  # Skip the "field_key" entry
-#            task_categories[str(idx)] = (category_name, category_id)
-#    
-#    # Display the task categories to the user
-#    while True:
-#        print("\nSelect Task Category:")
-#        for key, (value, _) in task_categories.items():
-#            print(f"{key}. {value}")
-#        
-#        # Get the user's choice
-#        user_choice = input("Enter the number corresponding to your choice: ").strip()
-#        
-#        # Validate selection
-#        if user_choice in task_categories:
-#            selected_category_id = task_categories[user_choice][1]
-#            print(f"✅ Selected Task Category: {task_categories[user_choice][0]} (ID: {selected_category_id})")
-#            return selected_category_id
-#        else:
-#            print("❌ Invalid choice! Please enter a valid number.")
-#
-#def get_user_selected_task_size( project_key, issue_type):
-#    """Get the user-selected Task Size ID based on the configuration."""
-#    config = load_config()
-#    # Get the Task Size section for the specified project key and issue type
-#    task_size_config = config.get(project_key, {}).get(issue_type, {}).get("Task Size", {})
-#    if not task_size_config:
-#        print(f"❌ No Task Size configuration found for project '{project_key}' and issue type '{issue_type}'.")
-#        return None
-#    
-#    # Dynamically build the task_sizes dictionary
-#    task_sizes = {}
-#    for idx, (size_name, size_id) in enumerate(task_size_config.items(), start=1):
-#        if size_name != "field_key":  # Skip the "field_key" entry
-#            task_sizes[str(idx)] = (size_name, size_id)
-#    
-#    # Display the task sizes to the user
-#    while True:
-#        print("\nSelect Task Size:")
-#        for key, (value, _) in task_sizes.items():
-#            print(f"{key}. {value}")
-#        
-#        # Get the user's choice
-#        user_choice = input("Enter the number corresponding to your choice: ").strip()
-#        
-#        # Validate selection
-#        if user_choice in task_sizes:
-#            selected_size_id = task_sizes[user_choice][1]
-#            print(f"✅ Selected Task Size: {task_sizes[user_choice][0]} (ID: {selected_size_id})")
-#            return selected_size_id
-#        else:
-#            print("❌ Invalid choice! Please enter a valid number.")
 
 def get_user_selected_task_category(project_key, issue_type):
     """Get the user-selected Task Category ID based on the configuration."""
@@ -239,41 +175,7 @@ def create_jira_task_or_issue(PROJECT_KEY, issue_type, task, description, select
     else:
         print(f"❌ Failed to create {issue_type}: {response.text}")
 
-#def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate):
-#    """Log task creation details in Jira."""
-#    jira_auth = get_jira_auth()
-#    JIRA_URL = jira_auth["url"]
-#    auth = jira_auth["auth"]
-#    
-#    
-#    work_log_payload = {
-#        "timeSpent": time_estimate,  # e.g., "2h" or "30m"
-#        "started": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.000+0000"),  # UTC timestamp
-#        "comment": {
-#            "type": "doc",
-#            "version": 1,
-#            "content": [
-#                {
-#                    "type": "paragraph",
-#                    "content": [
-#                        {
-#                            "type": "text",
-#                            "text": summary
-#                        }
-#                    ]
-#                }
-#            ]
-#        }
-#    }
-#    
-#    # Call the Work Log API
-#    work_log_url = f"{JIRA_URL}/rest/api/3/issue/{issue_key}/worklog"
-#    work_log_response = requests.post(work_log_url, json=work_log_payload, auth=auth, headers={"Content-Type": "application/json"})
-#    
-#    if work_log_response.status_code == 201:
-#        print(f"✅ Logged task creation details in Jira issue: {issue_key} for {PROJECT_KEY}")
-#    else:
-#        print(f"❌ Failed to log task creation details in Jira: {work_log_response.text}")
+
 def log_task_in_jira(issue_key, PROJECT_KEY, summary, issue_type, time_estimate, new_status="Done"):
     """Log task creation details in Jira and optionally update the issue status."""
     jira_auth = get_jira_auth()
