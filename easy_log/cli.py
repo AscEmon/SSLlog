@@ -106,32 +106,44 @@ def ensure_config():
         config = load_config()  # Reload the updated configuration
     return config
 
-
-def gen_key(JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL):
+def gen_key(force_new_project=False):
     """
     Generate a key by setting up a Jira project, issue types, and dropdown configurations.
+    
+    Args:
+        force_new_project (bool): If True, forces the creation of a new project key even if projects already exist.
     """
-    # Prompt the user to enter the Jira Project Key
-    project_key = input("Enter Jira Project Key for setup: ").strip()
-
+    config = ensure_config()
+    
+    # 🔹 Jira Credentials & Base URL
+    JIRA_URL = config.get("JIRA_URL")
+    JIRA_API_TOKEN = config.get("JIRA_API_TOKEN")
+    JIRA_USER_EMAIL = config.get("JIRA_USER_EMAIL")
+    
+    # Check if projects exist in the configuration
+    if 'projects' in config and not force_new_project:
+        print("Projects already exist in the configuration. Use 'force_new_project=True' to add a new project.")
+        return
+    
+    # Prompt the user to enter the Jira Project Key for setup
+    project_name = input("Enter Jira Project Key for setup: ").strip()
+    
     # Check if the project already exists in the configuration
-    project_exist = add_project(project_key)
-
-    # If the project already exists, exit the function early
+    project_exist = add_project(project_name)
     if project_exist:
         print("Project setup aborted as the project already exists.")
         return
-
+    
     # Initialize an empty list to store the selected issue types
     issue_types = []
-
+    
     # Loop until the user provides a valid input for issue type selection
     while True:
         # Prompt the user to select an issue type using numbers
         issue_type_input = input(
             "Enter issue type to configure (1 for Task, 2 for Bug, 3 for Both): "
         ).strip()
-
+        
         # Map the numeric input to the corresponding issue type
         if issue_type_input == "1":
             issue_types = ["Task"]
@@ -144,28 +156,28 @@ def gen_key(JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL):
             break
         else:
             print("Invalid input. Please enter '1' for Task, '2' for Bug, or '3' for Both.")
-
+    
     # Iterate over the selected issue types and process each one
     for issue_type in issue_types:
         print(f"\n🚀 Attempting to create a {issue_type} in Jira...")
-
         # Attempt to create a Jira task/bug
-        create_jira_key(project_key, issue_type, JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL)
-
+        create_jira_key(project_name, issue_type, JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL)
+        
         # Ask the user if they want to set dropdown values for the current issue type
         set_dropdown = input(f"Do you want to set dropdown values for {issue_type}? (Y/N): ").strip().upper()
         if set_dropdown == "Y":
-            create_jira_task_or_issue_key(project_key, issue_type, JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL)
+            create_jira_task_or_issue_key(project_name, issue_type, JIRA_URL, JIRA_API_TOKEN, JIRA_USER_EMAIL)
             
 def add_project(project_name):
     """Add a project to the configuration."""
     # Load the current configuration
     config = ensure_config()
-
+    
     # Ensure the 'projects' key exists
     if 'projects' not in config:
         config['projects'] = []
-
+        # Prompt the user to enter the Jira Project Key
+    
     # Add the project if it's not already in the list
     if project_name not in config['projects']:
         config['projects'].append(project_name)
@@ -186,13 +198,9 @@ def main():
     BITBUCKET_APP_PASSWORD = config.get("BITBUCKET_APP_PASSWORD")
     BITBUCKET_WORKSPACE = config.get("BITBUCKET_WORKSPACE")
     DISPLAY_NAME = config.get("DISPLAY_NAME")
-    # 🔹 Jira Credentials & Base URL
-    JIRA_URL = config.get("JIRA_URL")
-    JIRA_API_TOKEN = config.get("JIRA_API_TOKEN")
-    JIRA_USER_EMAIL = config.get("JIRA_USER_EMAIL")
    
-  
-    gen_key(JIRA_URL,JIRA_API_TOKEN,JIRA_USER_EMAIL)
+
+    gen_key()
     
     # Proceed with the main logic
     print("Select date to fetch commits:")
@@ -307,6 +315,8 @@ def cli():
 
         # Add the 'uninstall' command
     uninstall_parser = subparsers.add_parser("uninstall", help="Uninstall the Easy Log tool and clean up configuration")
+    
+    setup_project_parser = subparsers.add_parser("setup", help="Set up a new Jira project or reconfigure an existing one.")
 
     args = parser.parse_args()
 
@@ -314,7 +324,11 @@ def cli():
         main()
     elif args.command == "uninstall":
         remove_config()
+    elif args.command == "setup":
+        gen_key(True)
     else:
         parser.print_help()
 if __name__ == "__main__":
     cli()
+
+

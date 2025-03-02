@@ -66,7 +66,7 @@ def get_user_selected_task_category(project_key, issue_type):
         # Validate selection
         if user_choice in task_categories:
             selected_category_id = task_categories[user_choice][1]
-            print(f"✅ Selected Task Category: {task_categories[user_choice][0]} (ID: {selected_category_id})")
+            print(f"✅ Selected Task Category: {task_categories[user_choice][0]}")
             return selected_category_id
         else:
             print("❌ Invalid choice! Please enter a valid number.")
@@ -106,7 +106,7 @@ def get_user_selected_task_size(project_key, issue_type):
         # Validate selection
         if user_choice in task_sizes:
             selected_size_id = task_sizes[user_choice][1]
-            print(f"✅ Selected Task Size: {task_sizes[user_choice][0]} (ID: {selected_size_id})")
+            print(f"✅ Selected Task Size: {task_sizes[user_choice][0]}")
             return selected_size_id
         else:
             print("❌ Invalid choice! Please enter a valid number.")
