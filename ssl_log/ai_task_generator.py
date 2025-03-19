@@ -2,7 +2,7 @@ import subprocess
 import requests
 import os
 import json
-CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
+CONFIG_FILE = os.path.expanduser("~/.ssl_log/config.json")
 # 🔹 Required Custom Fields
 REQUIRED_FIELDS = ["Task Size", "Orginal Estimate", "Task Category", "Start Date", "End Date"]
 

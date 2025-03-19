@@ -1,0 +1,3 @@
+[console_scripts]
+ssl_log = ssl_log.cli:cli
+

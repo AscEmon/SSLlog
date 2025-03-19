@@ -307,10 +307,10 @@ def remove_config():
 
 def cli():
     """CLI entry point."""
-    parser = argparse.ArgumentParser(description="Easy Log CLI Tool")
+    parser = argparse.ArgumentParser(description="SSL Log CLI Tool")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     
-    run_parser = subparsers.add_parser("run", help="Run the Easy Log tool")
+    run_parser = subparsers.add_parser("run", help="Run the SSL Log tool")
 
 
         # Add the 'uninstall' command

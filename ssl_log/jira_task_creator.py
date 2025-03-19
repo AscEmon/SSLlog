@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 
 # Path to the configuration file
-CONFIG_FILE =  os.path.expanduser("~/.easy_log/config.json")
+CONFIG_FILE =  os.path.expanduser("~/.ssl_log/config.json")
 
 def load_config():
     """Load existing config.json."""

@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
-Name: easy-log
-Version: 1.0.0
+Name: ssl-log
+Version: 1.0.1
 Summary: A CLI tool to automate logging tasks from Bitbucket to Jira.
-Home-page: https://github.com/AscEmon/easy_log
+Home-page: https://github.com/AscEmon/SSLlog
 Author: Abu Sayed Chowdhury
 Author-email: sayem227@gmail.com
 License: UNKNOWN
@@ -13,22 +13,14 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 
-# Easy Log CLI Tool
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/easy_log.git
-   cd easy_log
-
+# SSL Log CLI Tool
 
 ## Configuration
 
 Upon installation, a default configuration file is created at:
 
-- **Linux/macOS**: `~/.easy_log/config.json`
-- **Windows**: `C:\Users\<Username>\.easy_log\config.json`
+- **Linux/macOS**: `~/.ssl_log/config.json`
+- **Windows**: `C:\Users\<Username>\.ssl_log\config.json`
 
 
 

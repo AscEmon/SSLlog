@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import os
 # Define the path to the configuration file
-CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
+CONFIG_FILE = os.path.expanduser("~/.ssl_log/config.json")
 
 def load_config():
     """Load the configuration file."""

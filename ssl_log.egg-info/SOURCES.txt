@@ -1,0 +1,15 @@
+README.md
+setup.py
+ssl_log/__init__.py
+ssl_log/ai_task_generator.py
+ssl_log/bitbucket.py
+ssl_log/cli.py
+ssl_log/config_gen.py
+ssl_log/custom_key_gen.py
+ssl_log/jira_task_creator.py
+ssl_log.egg-info/PKG-INFO
+ssl_log.egg-info/SOURCES.txt
+ssl_log.egg-info/dependency_links.txt
+ssl_log.egg-info/entry_points.txt
+ssl_log.egg-info/requires.txt
+ssl_log.egg-info/top_level.txt

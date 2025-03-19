@@ -14,7 +14,7 @@ REQUIRED_KEYS = [
 ]
 
 # Define the config file path
-CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
+CONFIG_FILE = os.path.expanduser("~/.ssl_log/config.json")
 
 def load_config():
     """Load the configuration from the file."""

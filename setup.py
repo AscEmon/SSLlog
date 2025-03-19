@@ -3,7 +3,7 @@ import json
 from setuptools import setup, find_packages
 
 # Define the default configuration file path
-CONFIG_FILE = os.path.expanduser("~/.easy_log/config.json")
+CONFIG_FILE = os.path.expanduser("~/.ssl_log/config.json")
 
 # Ensure the config directory exists and create an empty config file if it doesn't
 def create_default_config():
@@ -33,21 +33,21 @@ def create_default_config():
 create_default_config()
 
 setup(
-    name="easy_log",
-    version="1.0.0",
+    name="ssl_log",
+    version="1.0.1",
     author="Abu Sayed Chowdhury",
     author_email="sayem227@gmail.com",
     description="A CLI tool to automate logging tasks from Bitbucket to Jira.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/AscEmon/easy_log",  # Optional: Link to your repository
+    url="https://github.com/AscEmon/SSLlog",  # Optional: Link to your repository
     packages=find_packages(),
     install_requires=[
         "requests",  # Add other dependencies here
     ],
     entry_points={
         "console_scripts": [
-            "easy_log=easy_log.cli:cli",  # This makes `easy_log` available as a command
+            "ssl_log=ssl_log.cli:cli",  # This makes `easy_log` available as a command
         ],
     },
     classifiers=[
